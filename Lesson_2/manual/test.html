@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+<script>
+
+    // /* Приватные поля (свойства) класса
+    // * это свойства доступ на чтение и запись к которым ограничен вне класса. Доступ к изменению и чтению
+    // * этих свойств можно получить только изнутри класса (из методов) */
+    // // получение значения приватного свойства с помощью метода объявленного внутри класса
+    // class Person {
+    //     #baseProperty = 'breathe';
+    //     constructor(name, age) {
+    //         this.name = name;
+    //         this.age = age;
+    //     }
+    //     print() {
+    //         console.log(`Name: ${this.name} Age: ${this.age} Property: ${this.#baseProperty}`)
+    //     }
+    // }
+    // let mark = new Person('Mark', 29);
+    // mark.print();
+
+    // // Перезапись значения приватного свойства изнутри класса с помощью передачи данных в конструктор при вызове
+    // class Person {
+    //     #baseProperty = 'breathe';
+    //     constructor(name, age, property) {
+    //         this.name = name;
+    //         this.age = age;
+    //         this.#baseProperty = property;
+    //     }
+    //     print() {
+    //         console.log(`Name: ${this.name} Age: ${this.age} Property: ${this.#baseProperty}`)
+    //     }
+    // }
+    // let mark = new Person('Mark', 29, 'drink');
+    // mark.print();
+
+    // /* Приватные методы класса
+    // * методы доступ к которым можно получить только изнутри класса.
+    // * Они служат для узкоспециализированных целей - например для верификации входящих данных */
+    // class Person {
+    //     #baseProperty = 'breathe';
+    //     constructor(name, age, property) {
+    //         this.name = name;
+    //         this.age = this.#checkInfo(age);
+    //         this.#baseProperty = property;
+    //     }
+    //     #checkInfo(age){
+    //         if (age > 0 && age < 100) this.age = age;
+    //         return this.age;
+    //     }
+    //     print() {
+    //         console.log(`Name: ${this.name} Age: ${this.age} Property: ${this.#baseProperty}`)
+    //     }
+    // }
+    // let mark = new Person('Mark', 12, 'drink');
+    // mark.print();
+
+    // /* Статические свойства
+    // * свойства присущие классу в целом а не отдельному объекту класса
+    // * обращение к таким свойствам возможно как изнутри класса так и снаружи но через название класса, а не объекта */
+    // class Person {
+    //     static baseProperty = 'breathe';
+    //     constructor(name, age, property) {
+    //         this.name = name;
+    //         this.age = age;
+    //     }
+    //     print() {
+    //         console.log(`Name: ${this.name} Age: ${this.age} Property: ${Person.baseProperty}`)
+    //         // console.log(`Name: ${this.name} Age: ${this.age} Property: ${this.baseProperty}`) // undefined
+    //     }
+    // }
+    // let mark = new Person('Mark', 12, 'drink');
+    // mark.print();
+    // console.log(Person.baseProperty);
+    // console.log(mark.baseProperty); // undefined
+
+//     /* Статические методы
+//     * принадлежат классу в целом а не отдельному объекту класса */
+//     class Person {
+//         static baseProperty = 'breathe';
+//         static nation = 'american';
+//         constructor(name, age) {
+//             this.name = name;
+//             this.age = age;
+//         }
+//         print() {
+//             console.log(`Name: ${this.name} Age: ${this.age} Property: ${Person.baseProperty}`)
+//             // console.log(`Name: ${this.name} Age: ${this.age} Property: ${this.baseProperty}`) // undefined
+//         }
+//         static speak () {
+//             console.log(`I'm ${Person.nation}`)
+//         }
+//     }
+//     let mark = new Person('Mark', 12);
+//     mark.print();
+//     console.log(Person.baseProperty);
+//     console.log(Person.speak())
+// // //    пробуем с наследованием
+//     class Driver extends Person {
+//         print() {
+//             super.print();
+// // также можно вызвать статический метод родителя в потомке обратившись через имя класса
+//             console.log(Person.speak());
+//         }
+//     }
+//     let john = new Driver('John', 23);
+//     john.print(); //
+
+//     /* Приватные статические свойства и методы */
+//         class Person {
+//             static #baseProperty = 'breathe';
+//             static #nation = 'american';
+//             constructor(name, age, nation) {
+//                 this.name = name;
+//                 this.age = age;
+//                 this.nation = Person.#speak(nation)
+//             }
+//             print() {
+//                 console.log(`Name: ${this.name} Age: ${this.age} Property: ${Person.#baseProperty} Nation: ${this.nation}`)
+//                 // console.log(`Name: ${this.name} Age: ${this.age} Property: ${this.baseProperty}`) // undefined
+//             }
+// /* этот статический метод может быть вызван только из того класса где он объявлен и обрабатывать может только данные
+// * переданные в родительский конструктор. Ни для чего другого статический приватный метод не применим. Только для
+// * обработки (для верификации например) данных только внутри класса. Вызвать снаружи этот метод нельзя */
+//             static #speak (nation) {
+//                 if (nation != 'american'){
+//                     this.nation = nation;
+//                     return this.nation
+//                 } else {
+//                     console.log(`I'm american`)
+//                 }
+//             }
+//         }
+//         let mark = new Person('Mark', 12);
+//         mark.print();
+//     // //    пробуем с наследованием
+//         class Driver extends Person {
+//             print() {
+//                 super.print(); // cnf
+//             }
+//         }
+//     // можно только передать данные в статический приватный метод через родительский конструктор
+//         let john = new Driver('John', 23, 'american');
+//         john.print(); // получить результать родительского метода вызвав его из потомка. вызвать приватный метод нельзя
+
+//     /* Методы set и get в классе
+//     * применяются к одному и тому же методу внутри класса */
+//         class Person {
+//             static baseProperty = 'breathe';
+//             static nation = 'american';
+//             constructor(name, age, nation) {
+//                 this.name = name;
+//                 this.age = age;
+//                 Person.nation = nation;
+//             }
+//             print() {
+//                 console.log(`Name: ${this.name} Age: ${this.age} Property: ${Person.baseProperty} Nation: ${Person.nation} `)
+//             }
+//             //  set speak (nation) {
+//             //     Person.nation = nation;
+//             // }
+//              get speak () {
+//                 console.log(`I'm ${Person.nation}`)
+//             }
+//         }
+//         let mark = new Person('Mark', 12, 'spanish');
+//         mark.print();
+//         mark.speak = 'english'; // не запишет значение т.к. внутри класса set не объявлен
+//         mark.speak; // выведет I'n spanish
+// // Но применение get и set на самом деле заключается в выставлении одного единственного метода на запись или на чтение
+
+    // /* Наследование класса от другого класса */
+    //     class Person {
+    //         static baseProperty = 'breathe';
+    //         static nation = 'american';
+    //         constructor(name, age, nation) {
+    //             this.name = name;
+    //             this.age = age;
+    //             Person.nation = nation;
+    //         }
+    //         print() {
+    //             console.log(`Name: ${this.name} Age: ${this.age} Property: ${Person.baseProperty} Nation: ${Person.nation} `)
+    //         }
+    //          get speak () {
+    //             console.log(`I'm ${Person.nation}`)
+    //         }
+    //     }
+    //     class Teacher extends Person {
+    //         constructor(name, age, nation, profession) {
+    //             super(name, age, nation); //переопределение конструктора в потомке
+    //             this.profession = profession;
+    //         }
+    //         aboutMe() {
+    //             console.log(`I'm ${this.profession}`)
+    //         }
+    //         print() {
+    //             super.print();
+    //             console.log(`I'm working ${this.profession}`) // переопределение метода в потомке
+    //         }
+    //     }
+    // let nik = new Teacher('Nik', 34, 'russian', 'teacher');
+    //     nik.print();
+    //     nik.speak;
+    //     nik.aboutMe();
+
+
+</script>
+</body>
+</html>

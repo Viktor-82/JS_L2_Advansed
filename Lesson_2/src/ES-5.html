@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+<script>
+    function Person(firstName, lastName, year) {
+        this.name = firstName;  // ссылка на объект который запустил конструктор (man в данном случае)
+        this.lastName = lastName;
+        this.year = year;
+
+        this.calcAge = () => new Date().getFullYear() - year;
+    // В ES-5 методы создаются не в конструкторе а в прототипе конструктора
+    /* Добавление метода в прототип конструктора */
+    }
+    Person.prototype.info = ()  => console.log('welcome');
+
+    /* Наследование классов требует соблюдение алгоритма:
+    * 1) В функции конструкторе потомка необходимо вызывать базовый конструктор
+    * 2) Если у класса потомка есть уникальные свойства их нужно отдельно инициализировать
+    * 3) Импортировать прототип базового класса */
+    function Teacher(subject, ...properties) {
+        Person.apply(this, properties); // 1) Вызываем базовый конструктор
+        this.subject = subject; // 2) инициализируем уникальные свойства потомка объекта
+    }
+    Teacher.prototype = Object.create(Person.prototype); // 3) Здесь импортируем прототип
+    Teacher.prototype.construct = Person;                //    базового класса
+
+/* После создания конструктора потомка инициализации его уникальных свойств, импорта прототипа
+базового класса создаем новый объект класса потомка */
+    let teacher = new Teacher("Математика", "Иван", "Иванов", 1980);
+    console.log(teacher);
+    // // при создании объекта вызывается конструктор класса он возвращает объект класса
+    // let man = new Person("Иван","Иванов",1990);
+    // // console.log(`Пользователю ${man.name} ${man.calcAge()} лет`);
+    // man.profession = 'админ'; // сначала JS ищет свойства в объекте
+    // /* Добавление свойства в прототип объекта */
+    // man.__proto__.profession = 'программист'; // если не находит в объекте ищет в прототипе
+    // console.log(man.profession);
+</script>
+</body>
+</html>
+
+
+

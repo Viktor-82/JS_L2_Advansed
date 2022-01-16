@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+<script>
+    class Car {
+        constructor(title, price) {
+            this.title = title;
+            this.price = price;
+        }
+    }
+
+    class Factory {
+        createCar(title) {
+            console.log(`Начинатся сборка автомобиля ${title}`);
+            let car = new Car(title, parseInt(Math.random() * (5000 - 1000) + 1000));
+            return car;
+        }
+    }
+
+    class Order {
+        constructor(count) {
+            this.count = count;
+            this.cars = [];
+            this.sumOrder = 0;
+            this.createOrder();
+            this.showInfo();
+        }
+
+        showInfo() {
+            this.cars.forEach((car, i) => console.log(`${i + 1} Автомобиль ${car.title} стоит ${car.price}`));
+            console.log(`Общая стоимость заказа: ${this.sumOrder}`);
+        }
+
+        createOrder(){
+            let brands = ['VW', 'Scoda', 'Audi'];
+/* Обращаемся из одного класса к методам другого класса. Это возможно сделать только через объект другого класса */
+            let factory = new Factory();
+            for (let i=0; i < this.count; i++) {
+                this.cars.push(factory.createCar(brands[parseInt(Math.random()*brands.length)]));
+                this.sumOrder += this.cars[i].price;
+            }
+        }
+    }
+
+    let order = new Order(parseInt(Math.random() * 30 + 20));
+
+</script>
+</body>
+</html>

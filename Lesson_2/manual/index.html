@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+<script>
+    // /* Определение класса */
+    // class Person {};
+    //
+    // const Person = class {};
+    //
+    // const User = class Person {}
+    //
+    // /* Создание объектов класса
+    // * Возможно только после определения класса */
+    // const man = new Person();
+    //
+    // const User = class Person{};
+    // const tom = new User(); // в tom запишется экземпляр класса Person
+    //
+    // const Person = class{};
+    // const tom = new Person(); // запишется аномимный класс
+    //
+    // /* Пример создания класса и объекта (экземпляра этого класса) */
+    // class Person {
+    //     constructor(name, age) {
+    //         this.name = name;
+    //         this.age = age;
+    //     }
+    //     print() {
+    //         console.log(`Name: ${this.name} Age: ${this.age}`);
+    //     }
+    // }
+    // const tom = new Person('Tom', 34);
+    // tom.print(); // Name: Tom Age: 34
+    // const bob = new Person('Bob', 27);
+    // bob.print(); // Name: Bob Age: 27
+
+    // /* Приватные поля класса (использование # перед названием поля)
+    // * Назначение - ограничение возможности вносить изменения извне в этот класс */
+    // class Person{
+    //     #name;
+    //     #age;
+    //     constructor(name, age) {
+    //         this.#name = name;
+    //         this.#age = age;
+    //     }
+    //     print() {
+    //         console.log(`Name: ${this.#name} Age: ${this.#age}`)
+    //     }
+    // }
+    // const tom = new Person('Tom', 35); // Обратиться с свойствам можно только изнутри самого класса
+    // tom.name = 'Sam'; // Доступ к свойствам
+    // tom.age = -43;    // извне закрыт
+    // tom.print();
+
+    // /* Методы в классе для изменения приватных свойств извне */
+    // class Person{
+    //     #name;
+    //     #age = 1;
+    //     constructor(name, age){
+    //         this.#name = name;
+    //         this.setAge(age);
+    //     }
+    //     setAge(age){
+    //         // если возраст соответствует условию то доступ к изменению данных будет открыт через метод
+    //         if (age > 0 && age < 110) this.#age = age;
+    //     }
+    //     print(){
+    //         console.log(`Name: ${this.#name}  Age: ${this.#age}`);
+    //     }
+    // }
+    // const tom = new Person('Tom', 32);
+    // tom.print(); // Name: Tom Age: 32
+    // tom.setAge(22); // меняем значение приватного поля age через метод изнутри класса
+    // tom.print(); // Name: Tom Age: 22
+
+    // /* Приватные методы в классе
+    // * доступ к ним закрыт извне. Назначение как правило для валидации входящих данных */
+    // class Person {
+    //     #name = 'undefined';
+    //     #age = 1;
+    //     constructor(name, age) {
+    //         this.#name = this.#checkName(name);
+    //         this.setAge(age);
+    //     }
+    //     #checkName(name) {
+    //         if(name!=='admin') return name;
+    //     }
+    //     setAge(age) {
+    //         if (age > 0 && age < 110) this.#age = age;
+    //     }
+    //     print() {
+    //         console.log(`Name: ${this.#name}, Age: ${this.#age}`)
+    //     }
+    // }
+    // // const bill = new Person('admin', -2);
+    // //bill.print(); // undefined, 1
+    // const bill = new Person('Bill', 24);
+    // bill.print(); // Name: Bill, Age: 24
+
+    // /* Статические поля (свойства)
+    // * в них записывают данные относящиеся к классу в целом а не к одному из объектов класса
+    // * объявление через оперотор "static"   static age = 65;
+    // * обращение className.age = 62; Обращение через название класса а не через название объекта класса
+    // * Ограничение: в нестатических методах невозможно обращение к статическому свойству через this */
+    // class Person {
+    //     static retirementAge = 65;
+    //     constructor(name, age) {
+    //         this.name = name;
+    //         this.age = age;
+    //     }
+    //     print() {
+    //         console.log(`Имя: ${this.name} Возраст: ${this.age}`);
+    //     // в нестатических методах невозможно обращение к статическому свойству через this
+    //         console.log(`Пенсионный возраст (обращение через this): ${this.retirementAge}`); // будет undefined
+    //     // так обратиться можно.
+    //         console.log(`Пенсионный возраст (обращение через имя класса) ${Person.retirementAge}`);
+    //     }
+    // }
+    // console.log(Person.retirementAge); // 65
+    // Person.retirementAge = 62;
+    // console.log(Person.retirementAge); // 62
+    // let joe = new Person('Joe', 56);
+    // joe.print();
+
+    // /* Статические методы
+    // * определяют методы всего класса в целом, а не отдельного объекта. Пишутся через оператор "static"
+    // * обращение к методу static возможно только через имя класса (ClassName.methodName()
+    // * статический метод НЕ читает нестатические свойства и методы объекта (обращение через ${this.name} невозможно)
+    // * обращение из статического метода к нестатическим свойствам и методам объекта возможно только через объект ${person.name}
+    // * обращение из статического метода к статических свойствам и методам
+    // * (они могут принадлежать только классу) возможно через this  */
+    // class Person {
+    //     static profession = 'ingineer';
+    //     constructor(name, age) {
+    //         this.name = name;
+    //         this.age = age;
+    //     }
+    //     print(){
+    //         console.log(`Имя: ${this.name}  Возраст: ${this.age}`);
+    //     }
+    //     static printAge(person){
+    //         console.log(`Обращение через this ${this.age}`); // для статического метода this.age не существует
+    //         console.log(`Обращение через свойства объекта age ${person.age}`); // обращение через свойство объекта
+    //         console.log(`Обращение к статическому свойству из статического метода через this ${this.profession}`);
+    //     }
+    // }
+    // let bob = new Person('Bob', 32);
+    // // Person.printAge();  // undefined при вызове свойста объекта из статического метода
+    // Person.printAge(bob); //
+
+    // /* Приватные статические поля и методы
+    // * доступны только из других статических методов класса */
+    // class Person{
+    //     static #retirementAge = 65; // приватное статическое свойство класса
+    //     constructor(name, age){
+    //         this.name = name;
+    //         this.age = age;
+    //     }
+    //     print(){
+    //         console.log(`Имя: ${this.name}  Возраст: ${this.age}`);
+    //     }
+    //     static calculateRestAges(person){
+    //         if(this.#retirementAge > person.age){
+    //             const restAges = this.#retirementAge - person.age;
+    //             console.log(`До пенсии осталось ${restAges} лет`);
+    //         }
+    //         else console.log("Вы уже на пенсии");
+    //     }
+    // }
+    // // console.log(Person.#retirementAge);  // ! Ошибка: поле retirementAge -приватное
+    // const tom = new Person("Tom", 37);
+    // Person.calculateRestAges(tom);      // обращение к функции через объект передаваемый в класс
+    // const bob = new Person("Bob", 71);  // т.к. calculateRestAges "static". Далее обращение к приватному свойству
+    // Person.calculateRestAges(bob);      // #retirementAge только изнутри статического метода.
+
+//     /* Методы доступа set(установить) и get(получить) применяются к методу класса с одним и тем же названием
+//     синтаксис вызова метода такой же обращение к свойству .age - без ()
+//     при такой записи tom.age - сработае get и выведет значение, tom.age = 15 - сработает set и запишет значение
+//     причем в set при этом может быть написано условие проверки переданного значения */
+//     class Person{
+//         #ageValue = 1;
+//         constructor(name, age) {
+//             this.name = name;
+//             this.age = age;
+//         }
+//         set age(value) {
+//             console.log(`Передано ${value}`);
+// // если проверка пройдена то идет запись в приватное свойство класса изнутри метода
+//             if(value > 0 && value < 110) this.#ageValue = value;
+//         }
+//         get age() {
+//             return this.#ageValue;
+//         }
+//     }
+//     const tom = new Person("Tom", 37);
+//     console.log(tom.age); // 37
+//     tom.age = -15;        // попытка присвоить некорректные данные
+//     console.log(tom.age); // значение age не будет переписано. Выведет 37
+
+    // /* С помощью методов get и set также можно сделать доступ только на чтение или только на запись
+    // * (изначально приватных полей класса) */
+    // class Person{
+    //     #age = 1;
+    //     #name;
+    //     constructor(name, age){
+    //         this.#name = name;
+    //         this.age = age;
+    //     }
+    //     //set name(value){ this.#name = value; }
+    //     get name(){ return this.#name; }
+    //     set age(value){ if(value >0 && value < 110) this.#age = value; }
+    //     get age(){ return this.#age; } // если закрываем метод get то прочиать свойство нельзя, только записать
+    // }
+    // const tom = new Person("Tom", 37);
+    // console.log(tom.name);  // Tom ’,
+    // tom.name = "Bob";       // Метод set не доступен
+    // console.log(tom.name);  // Tom  значение не изменилось
+    // console.log(tom.age);
+    // tom.age = 10; // для свойства age метод set открыт
+    // console.log(tom.age); // 20
+
+    // /* Пример только на запись */
+    // class Person{
+    //     #id;
+    //     constructor(name, age, id){
+    //         this.name = name;
+    //         this.age = age;
+    //         this.id = id;
+    //     }
+    //     set id(value){ this.#id = value;}
+    //     print(){
+    //         console.log(`id: ${this.#id}   name: ${this.name}   age: ${this.age}`);
+    //     }
+    // }
+    // const tom = new Person("Tom", 37, 1);
+    // tom.print();            // id: 1   name: Tom   age: 37
+    // tom.id = 55;            // устанавливаем значение свойства id
+    // tom.print();            // id: 55   name: Tom   age: 37
+    // console.log(tom.id);    // undefined - значение свойства id нельзя получить
+    // tom.id = 100;
+    // tom.print();
+
+    // /* Применение set и get к вычисляемым свойствам */
+    // // получение вычисляемого результата
+    // class Person{
+    //     constructor(firstName, lastName){
+    //         this.firstName = firstName;
+    //         this.lastName = lastName;
+    //     }
+    //     get fullName(){ return `${this.firstName} ${this.lastName}` }
+    // }
+    // const tom = new Person("Tom", "Smith");
+    // console.log(tom.fullName);  // Tom Smith
+
+    // // получение вычисляемого результата и запись данных для нового вычисления
+    // class Person{
+    //     constructor(firstName, lastName){
+    //         this.firstName = firstName;
+    //         this.lastName = lastName;
+    //     }
+    //     get fullName(){ return `${this.firstName} ${this.lastName}` }
+    //     set fullName(value){
+    //  // разбиваем стоку по пробелу получаем массив из двух элементов, делаем деструктуризацию (значения в переменные)
+    //         [this.firstName, this.lastName] = value.split(" ");
+    //     }
+    // }
+    // const tom = new Person("Tom", "Smith");
+    // console.log(tom.fullName);  // Tom Smith
+    // tom.fullName = "Tomas Jefferson"; // при операции присваивания сработает set
+    // console.log(tom.lastName);  // Jefferson
+
+    // /* Наследование классов от других классов
+    // * Назначение - сократить код в классах наследниках */
+    // // Наследование класса без конструктора
+    // class Person{
+    //     name;
+    //     age;
+    //     print(){
+    //         console.log(`Name: ${this.name}  Age: ${this.age}`);
+    //     }
+    // }
+    // class Employee extends Person{
+    //     company;
+    //     work(){
+    //         console.log(`${this.name} works in ${this.company}`);
+    //     }
+    // }
+    // const tom = new Person();
+    // tom.name = "Tom";
+    // tom.age= 34;
+    // const bob = new Employee();
+    // bob.name = "Bob";
+    // bob.age = 36;
+    // bob.company = "Google"; // запись напрямую в свойство, конструктор не нужен
+    // tom.print();    // Name: Tom  Age: 34
+    // bob.print();    // Name: Bob  Age: 36
+    // bob.work();     // Bob works in Google
+
+    // // Наследование класса с конструктором
+    // class Person{
+    //     constructor(name, age){
+    //         this.name = name;
+    //         this.age = age;
+    //     }
+    //     print(){
+    //         console.log(`Name: ${this.name}  Age: ${this.age}`);
+    //     }
+    // }
+    // class Employee extends Person{
+    //     company;
+    //     work(){
+    //         console.log(`${this.name} works in ${this.company}`);
+    //     }
+    // }
+    // const tom = new Person("Tom", 34);
+    // tom.print();    // Name: Tom  Age: 34
+    // const sam = new Employee("Sam", 25);    // наследует конструктор, параметры передаем для конструктора
+    // sam.print();    // Name: Sam  Age: 25
+    // sam.company = "Microsoft"; // по прежнему есть запись напрямую в свойство наследника
+    // sam.work(); // Microsoft
+
+    // /* Создание конструктора в классе наследника
+    // * для этого необходимо вызывать конструктор базового класса в классе наследнике через ключевое слово "super"
+    // * передавать в него объявленные в базовом конструкторе параметры, а уникальный параметр свойственный только
+    // * для наследника прописывать дополнительно в поле конструктора наследника */
+    // class Person{
+    //     constructor(name, age){
+    //         this.name = name;
+    //         this.age = age;
+    //     }
+    //     print(){
+    //         console.log(`Name: ${this.name}  Age: ${this.age}`);
+    //     }
+    // }
+    // class Employee extends Person{
+    //     constructor(name, age, company){
+    //         super(name, age); // вызвали конструктор базового класса и передали в него параметры
+    //         this.company = company; // уникальное свойство конструктора наследника прописываем отдельно
+    //     }
+    //     work(){
+    //         console.log(`${this.name} works in ${this.company}`);
+    //     }
+    // }
+    // const tom = new Person("Tom", 34);
+    // tom.print();    // Name: Tom  Age: 34
+    // const sam = new Employee("Sam", 25, "Google");
+    // sam.print();    // Name: Sam  Age: 25
+    // sam.work();     // Sam works in Google
+
+    // /* Переопределение методов в классе наследнике
+    // * используем ключевое слово super чтобы в теле наследуемого метода вызвать сначала метод со всеми данными из
+    // * базового класса, а потом дополняем данные уникальными присущими только наследнику  */
+    // class Person {
+    //     constructor(name, age){
+    //         this.name = name;
+    //         this.age = age;
+    //     }
+    //     print() {
+    //         console.log(`Name: ${this.name}  Age: ${this.age}`);
+    //     }
+    // }
+    // class Employee extends Person {
+    //     constructor(name, age, company) {
+    //         super(name, age);
+    //         this.company = company;
+    //     }
+    //     print() {
+    //         super.print(); // вызвали в наследнике метод родителя (т.е. все данные в нем записанные)
+    //         console.log(`Company: ${this.company}`); // дописали данные присущие только наследнику
+    //     }
+    //     work() {
+    //         console.log(`${this.name} works in ${this.company}`);
+    //     }
+    // }
+    // const sam = new Employee("Sam", 25, "Google");
+    // sam.print();    // Name: Sam  Age: 25
+    //                 // Company: Google
+
+    // /* Исключения при наследовании - приватные поля
+    // * Свойства и методы в базовом классе являющиеся приватными не будут доступны из класса наследника никак вообще
+    // * ни через this.#name ни через super.#name
+    // * Приватные поля класса могут быть доступны только из самого этого класса */
+    // class Person{
+    //     #name;
+    //     constructor(name, age){
+    //         this.#name = name;
+    //         this.age = age;
+    //     }
+    //     print(){
+    //         console.log(`Name: ${this.#name}  Age: ${this.age}`);
+    //     }
+    // }
+    // class Employee extends Person{
+    //     constructor(name, age, company){
+    //         super(name, age);
+    //         this.company = company;
+    //     }
+    //     print(){
+    //         // super.print();
+    //         console.log(`Company: ${this.company}`);
+    //     }
+    //     work(){
+    //         console.log(`${this.#name} works in ${this.company}`);  // ! Ошибка - поле #name недоступно из Employee
+    //     }
+    // }
+    // let bill = new Employee('Bill', 33, 'Oracle');
+    // bill.print(); // Private field '#name' must be declared in an enclosing class
+    // bill.work(); // Private field '#name' must be declared in an enclosing class
+
+</script>
+</body>
+</html>

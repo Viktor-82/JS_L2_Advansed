@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+<script>
+    class Person {
+        constructor(name,year){
+            this.name = name;
+            this.year = year;
+        }
+        /* В данном примере метод относится к объекту и вызывается с помощью объекта */
+        /* Инкапсуляция. Добавление символа #info перед классом - закрываем доступ к методу */
+        /* Запись _info - конструкция рекомендательного характера. Не использовать метод вне класса */
+        info(){
+            return `Пользователь ${this.name} родился в ${this.year} году`;
+        }
+        /* В данном примере метод просто сравнивает два объекта. Он не относится ни к одному из объектов,
+        * он относится к классу поэтому этот метод нужно писать с модификатором static
+        * и вызываться от будет не с помощью объекта, а с помощью класса. Все что универсально, может использоваться
+        * в любых конструкциях и не относится к отдельному объекту делаем при помощи модификатора static */
+        static compareAge(man1, man2){
+            if(man1.year == man2.year) {
+                console.log('Ровестники');
+            } else if(man1.year > man2.year) {
+                    console.log(`${man2.name} младше пользователя ${man1.name} на ${man1.year - man2.year} года`);
+                } else if(man2.year > man1.year) {
+                    console.log(`${man1.name} младше пользователя ${man2.name} на ${man2.year - man1.year} года`);
+                }
+            }
+    }
+
+    // let man = new Person("Иван", 1990);
+    // console.log(man.info()); // вызов нестатического метода с помощью объекта
+    // let man1 = new Person("Иван", 1990);
+    // let man2 = new Person("Петр", 1993);
+    // Person.compareAge(man1, man2); // вызов статического метода с помощью класса
+
+    class Teacher extends Person {
+/* Если класс наследуется от класса в котором есть конструктор с параметрами, то нужно создавать
+* конструктор в потомке класса и вызывать базовый конструктор через super */
+        constructor(name, year, subject) {
+            super(name, year, ) // вызываем конструктор базового класса
+            this.subject = subject;
+        }
+//         show() {
+// /* Здесь с помощью this можно вызвать как метод базового так и метод текущего класса */
+//             console.log(`${this.info()}. Он преподает предмет ${this.subject}`)
+//         }
+/* Пример полиморфизма. Переопределяем метод в потомке (используем то же название а действия другие.
+* В этом случае метод базового класса будет вызываться через ключевое слово super */
+        info() {
+            console.log(`${super.info()}. Он преподает предмет ${this.subject}`)
+        }
+    }
+    let man = new Teacher('Иван Иванович', 1970, 'Физика');
+    // man.show();
+    man.info();
+
+</script>
+</body>
+</html>
