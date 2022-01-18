@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<!-- Тема: работа с данными -->
+<script>
+// let userJson = '{"name":"Иван", "age":25, "isAdmin":true}';
+// let user = JSON.parse(userJson);
+// console.log(user);
+// user.dateCreated = '2021-12-09';
+// user.address = {
+//     city:'Москва',
+//     postalCode:'410001'
+// }
+// console.log(user);
+
+// /* Преобразование в строку */
+// let user2 = JSON.stringify(user);
+//     // преобразование в строку выбранных элементов
+// let user2 = JSON.stringify(user,['name','age','address','city']);
+//     // преобразование в строку всех элементов с форматированием объекта и пробелами
+// let user2 = JSON.stringify(user,null,4); // 4-количество пробелов после элемента + форматирование под объект
+//     console.log(user2);
+// /* Вывести не строку, а объект класса Date и перезаписать объект */
+// /* Приведение строки в объект parse. Изменение элемента объекта на другой используем стрелочную
+// * функцию с двумя переданными параметрами (ключ,значение) */
+// let user3 = JSON.parse(user2,(key,value)=>{
+//     if(key == 'dateCreated'){
+//         value = new Date(value);
+//     }
+//     return value;
+// })
+//     console.log(user3);
+
+</script>
+</body>
+</html>

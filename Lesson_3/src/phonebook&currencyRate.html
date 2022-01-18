@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<div></div>
+<script>
+//     /* Здесь делаем парсинг телефонной книги */
+// // fetch - функция выполняет AJAX запрос к серверу и возвращает объект Promise
+//     fetch("phone.json") // json должен быть на сервере
+//         .then(text => text.json())// text - исходник ресурса; json() - метод преобразующий строку json в объект JS и вернет Promise.
+//         .then(data => {// здесь data это массив объектов
+//             data.forEach(item => {
+//             document.querySelector('div').insertAdjacentHTML('beforeend', `${item.name} имеет телефон ${item.phone}<br>`)// console.log(data);
+//             });
+//         })
+
+    /* Получаем курс валют с внешнего веб сервиса (запрос в гугл "курс валют api" */
+    fetch("https://www.cbr-xml-daily.ru/daily_json.js")
+        .then(text => text.json())
+        .then(data => {
+            console.log(`1$ =${data.Valute.USD.Value} руб.`)
+        })
+
+    /* внешний ресурс GB с json - https://github.com/GeekBrainsTutorial/online-store-api/ */
+
+
+</script>
+</body>
+</html>
