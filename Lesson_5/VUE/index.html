@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<!--&lt;!&ndash;Объект класса Vue будет связан с тем блоком html в котором в id будет прописано значение свойства el: &ndash;&gt;-->
+<div id="app">
+<!--<h3>Hello, {{ name.toUpperCase() }}</h3> &lt;!&ndash;Значение js из поля data объекта Vue&ndash;&gt;-->
+
+<!--    &lt;!&ndash;Связывание данных позволяет синхронизировать данные и их отображение. Реализуется при помощи-->
+<!--    использования v - атрибутов&ndash;&gt;-->
+<!--    <input type="text" v-model="name">-->
+<!--    <p v-if="name.length !=0">Hi, my name is {{ name }}</p> &lt;!&ndash;применен v-if - условие как в js&ndash;&gt;-->
+
+    <!--Списки. Реализуются при помощи атрибута v-for . Перебор массива. -->
+    <!--<ul>
+        <li v-for="name in names">{{ name }}</li>
+    </ul>
+
+    <ul>
+        <li v-for="name in names">
+            <pre>{{ name }}</pre> &lt;!&ndash;Для вложеных конструкций то же самое&ndash;&gt;
+        </li>
+    </ul>-->
+
+    <!--Обработка событий на элементе. Атрибут v-on + метод обработчик в объекте Vue (в поле methods:{})
+    более короткая запись которая используется на практике вместо "v-on:" - "@". Отслеживаемых событий много.-->
+<!--    <ul>-->
+<!--        <li v-for="name in names" @click="clickHandler">{{ name }}</li>-->
+<!--    </ul>-->
+
+    <!--Отслеживание событий сразу при загрузке. Метод mounted() -->
+
+    <!--Компоненты. Поле components:{}. Пишем данные в переменной и регистрируем компонент в классе Vue. -->
+<!--    <ol>-->
+<!--        <todo-item></todo-item> &lt;!&ndash;Создание экземпляра компонента TodoItem &ndash;&gt;-->
+<!--    </ol>-->
+
+    <!--Вычисляемые свойства. Поле computed{}. Это функция, которая обрабатывает исходные данные и возвращает нужное значение.-->
+<!--    <input type="text" v-model="name">-->
+<!--&lt;!&ndash;    <p>Hi, my name is {{name}}</p>&ndash;&gt;-->
+<!--    <p>Hi, my name is {{upperCaseName}}</p>-->
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script> <!--Подключение скрипта Vue.js-->
+<script src="vue.js"></script>
+</body>
+</html>
