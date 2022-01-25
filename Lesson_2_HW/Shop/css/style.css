@@ -1,0 +1,24 @@
+.products {
+    margin: 10px auto;
+    display: flex;
+    justify-content: space-around;
+}
+.product-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid gray;
+    padding-bottom: 8px;
+}
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding: 0 7%;
+}
+.basket {
+    position: relative;
+}
+.product-item-basket {
+    position: absolute;
+}
