@@ -1,22 +1,45 @@
+
+const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
+
 class ProductsList {
-    constructor(container = '.products'){
+    constructor(container = '.products', category = "/catalogData.json"){
+        this.cat = category;
         this.container = container;
         this.goods = [];
         this.allProducts = [];
-        this._fetchProducts();
+        // this.data = null;
+        // this.fetchProducts();
+        // this.acyncrRender();
     }
-    
-    _fetchProducts() {
-        this.goods = [
-            {id: 1, title: 'Notebook', price: 2000},
-            {id: 2, title: 'Mouse', price: 20},
-            {id: 3, title: 'Keyboard', price: 200},
-            {id: 4, title: 'Gamepad', price: 50},
-        ];
+
+    getJson(url) {
+        let URL = (url ? url : `${API + this.cat}`);
+        return fetch(URL)
+            .then(response => response.json())
+            .then(data => this.goods = [...data])
     }
+
+    returnGoods(){
+        return this.goods;
+    }
+
+    // fetchProducts(url) { // меняем метод. список товаров получаем из удаленного json
+    //     let URL = (url ? url : `${API + this.cat}`);
+    //               fetch(URL)
+    //                 .then(response => response.json())
+    //                 .then(data => this.goods = [...data])
+    //                 .then(() => console.log(this.goods))
+    // }
+
+    // acyncrRender() {
+    //     setTimeout(() => {
+    //         this.render();
+    //     }, 100)
+    // }
+
     render() {
-        const block = document.querySelector(this.container);
-        for(let product of this.goods){
+          const block = document.querySelector(this.container);
+            for(let product of this.goods){
             const productObj = new ProductItem(product);
             this.allProducts.push(productObj);
             block.insertAdjacentHTML('beforeend',productObj.render())
@@ -36,14 +59,15 @@ class ProductsList {
 // //        let res = this.allProducts.reduce((s, item) => s + item.price,0);
 //         alert(res);
 //     }
+
 }
 
 
 class ProductItem {
 	constructor(product, img = 'https://via.placeholder.com/200x150'){
-		this.title = product.title;
+		this.title = product.product_name;
 		this.price = product.price;
-		this.id = product.id;
+		this.id = product.id_product;
 		this.img = img;
 		
 	}
@@ -58,37 +82,43 @@ class ProductItem {
 	}
 }
 
-let list = new ProductsList();
-list.render();
-// list.getSum();
-
 /* В этой версии не реализовано уменьшение количество товара в корзине по клику */
 class Basket {
     constructor() {
+        this.goodsFromProductsList = [];
         this.goodsInBasket = [];
-        this.addGood();
+        // this.acyncrAddGoods();
+        this.init();
     }
 
-    addGood() {
-        document.querySelectorAll('.buy-btn').forEach(el => {
-            el.addEventListener('click', event => {
-                let product = new ProductsList().goods.forEach(el => {
-                    // здесь ошибка функция вызывается несколько раз пока .stopPropagation() не поставишь, а с ним
-                    // if(this.goodsInBasket.find(item => item.id == +event.target.parentNode.dataset.id)) {
-                    //     this.changeGood(event).stopPropagation();
-                    // } else
-                    //     if (el.id == +event.target.parentNode.dataset.id) {
-                    //     this.goodsInBasket.push(el);
-                    //     this.render(); // при каждом добавлении элемента вызывается рендер
-                    // }
-                    if (el.id == +event.target.parentNode.dataset.id) {
-                    if(this.goodsInBasket.find(item => item.id == +event.target.parentNode.dataset.id)) {
+    init(){
+        let a = new ProductsList()
+        a.getJson()
+            .then(() => a.render())
+            .then(() => this.goodsFromProductsList = a.returnGoods())
+            .then(() => this.addGood())
+
+    }
+    // acyncrAddGoods() {
+    //     setTimeout(() => {
+    //         this.addGood();
+    //     }, 200)
+    // }
+    addGood() { // вариант 1
+        document.querySelectorAll('.buy-btn').forEach(el =>   {
+            el.addEventListener('click', event =>  {
+/*  Была ошибка в которой существовал один раз созданный массив объектов (а не каждый раз вновь создаваемый) и работа
+* с ним велась добавлением его элементов в другой объект. При записи this.goodsInBasket.push(el) в goodsInBasket
+* копировалась ссылка на объект находящийся в  goodsFromProductsList поэтому все действия с  */
+                    this.goodsFromProductsList.forEach( el => { //
+                    if (el.id_product == +event.target.parentNode.dataset.id && this.goodsInBasket.find(i => i.id_product == el.id_product)) {
+                        console.dir(this.goodsFromProductsList)
                         this.changeGood(el);
-                    } else {
-                        this.goodsInBasket.push(el);
-                        this.render(); // при каждом добавлении элемента вызывается рендер
+                    } else if (el.id_product == +event.target.parentNode.dataset.id){
+                        this.goodsInBasket.push({...el});
+                        this.render();
+                        console.dir(this.goodsInBasket)
                     }
-                   }
                 });
             })
         })
@@ -97,7 +127,7 @@ class Basket {
     removeGood() {
         document.querySelectorAll('.del-btn').forEach(el => {
             el.addEventListener('click', () => {
-                let a = this.goodsInBasket.findIndex(item => item.id == +el.dataset.id);
+                let a = this.goodsInBasket.findIndex(item => item.id_product == +el.dataset.id);
                 this.goodsInBasket.splice(a, 1);
                 this.render();
             })
@@ -105,9 +135,8 @@ class Basket {
     }
     //
     changeGood(el) {
-        // console.dir(el); // объект получаем все ок!
         this.goodsInBasket.forEach(item => {
-            if(item.id == el.id) {
+            if(item.id_product == el.id_product) {
                 item.price += el.price;
             }
         })
@@ -137,8 +166,8 @@ class Basket {
 
 class ElemBasket {
     constructor(product, img = 'https://via.placeholder.com/50x100') {
-        this.id = product.id;
-        this.title = product.title;
+        this.id = product.id_product;
+        this.title = product.product_name;
         this.price = product.price;
         this.img = img;
     }
@@ -154,7 +183,13 @@ class ElemBasket {
     }
 }
 
+// let productList = new ProductsList(); // 1)
+
 let basket = new Basket();
+
+
+// list.getSum();
+// let basket = new Basket();
 // basket.addGood();
 // basket.render();
 basket.showBasket();
