@@ -11,9 +11,6 @@ const basketUrl = '/getBasket.json';
 const checkAddBasketUrl = '/addToBasket.json';
 const checkDellBasketUrl = '/deleteFromBasket.json';
 
-// const renderPage = {
-//     props: [shop.goods]
-// }
 /* В js файле объявляем новый объект класса Vue
 *  в html подключаем ссылку на cdn и объявляем селектор с которым будет взаимодествовать объект класса Vue */
 const shop = new Vue({
@@ -34,9 +31,6 @@ const shop = new Vue({
             .then(() => console.log(this.goods))
     },
     methods: {
-        // insertMark(product) {
-        //     document.querySelector('.products').insertAdjacentHTML('beforeend', this.makeRender(product));
-        // },
         makeRender(product){
             let img = 'https://placehold.it/200x150';
             return `<div class="product-item" data-id="${product.id_product}">
@@ -47,7 +41,8 @@ const shop = new Vue({
                     <button class="buy-btn"
                     data-id="${product.id_product}"
                     data-name="${product.product_name}"
-                    data-price="${product.price}">Купить</button>
+                    data-price="${product.price}"
+                    @click="addProductsBasket">Купить</button>
                 </div>
             </div>`
         },
@@ -63,6 +58,9 @@ const shop = new Vue({
                     block.classList.add('invisible')
                 }
             }
+        },
+        addProductsBasket(){
+            return console.log('some text')
         }
     }
 });

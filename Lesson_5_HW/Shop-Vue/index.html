@@ -11,14 +11,10 @@
     <header>
         <div class="logo">E-shop</div>
         <div class="cart">
-            <form action="#" class="search-form">
-                <input type="text" class="search-field" v-model="filter">
-                <button class="btn-search" type="submit" @click="filterEl(filter)">
-                    <i class="fas fa-search"></i>
-                </button>
-            </form>
-            <button class="btn-cart" type="button"  @click="visible=!visible">Корзина</button>
-            <div class="cart-block" v-if="visible"></div>
+                <search-el></search-el>
+<!--            <button class="btn-cart" type="button"  @click="visible=!visible">Корзина</button>-->
+            <basket></basket>
+<!--            <div class="cart-block" v-if="visible"></div>-->
         </div>
     </header>
     <main>
@@ -27,8 +23,14 @@
 </div>
 <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
 <!--<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>-->
-<script src="https://unpkg.com/vue"></script>
-<script src="mainVue.js"></script>
+<!--<script src="https://unpkg.com/vue"></script>--> <!--Эта ссылка дает нестабильные результаты-->
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+
+<script src="search.js"></script>
+<script src="basketComponent.js"></script>
+<script src="main.js"></script>
+<!--<script src="makeRender.js"></script>-->
+
 
 </body>
 </html>
