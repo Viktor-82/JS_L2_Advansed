@@ -1,0 +1,18 @@
+.hamburger {
+    width: 370px;
+    margin: 0 auto;
+}
+h3 {
+    text-align: center;
+}
+.options {
+    border: 1px solid burlywood;
+    margin: 5px 0;
+    border-radius: 5px;
+}
+.red {
+    color: red;
+}
+button {
+    border-radius: 5px;
+}

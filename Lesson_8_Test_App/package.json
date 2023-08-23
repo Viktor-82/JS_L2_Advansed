@@ -1,0 +1,16 @@
+{
+  "name": "lesson_8_test_app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "moduleName": "jasmine spec/calc.spec.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jasmine": "^4.0.2",
+    "jasmine-core": "^4.0.0"
+  }
+}
